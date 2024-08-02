@@ -21,6 +21,11 @@ const addTodo = ()=>{
     deleteBtn.classList.add("btn","deleteBtn");
     li.appendChild(deleteBtn);
 
+    const editBtn = document.createElement("button");
+    editBtn.innerText = "Edit";
+    editBtn.classList.add("btn","editBtn");
+    li.appendChild(editBtn);
+
     todoList.appendChild(li);
     inputBox.value = "";
 
