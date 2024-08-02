@@ -21,6 +21,7 @@ const addTodo = ()=>{
     deleteBtn.classList.add("btn","deleteBtn");
     li.appendChild(deleteBtn);
 
+    //creating edit btn
     const editBtn = document.createElement("button");
     editBtn.innerText = "Edit";
     editBtn.classList.add("btn","editBtn");
