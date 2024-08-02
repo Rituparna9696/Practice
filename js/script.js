@@ -15,17 +15,18 @@ const addTodo = ()=>{
     p.innerHTML = inputText;
     li.appendChild(p);
 
+    //creating edit btn
+    const editBtn = document.createElement("button");
+    editBtn.innerText = "Edit";
+    editBtn.classList.add("btn","editBtn");
+    li.appendChild(editBtn);
+    
     //creating delete btn
     const deleteBtn = document.createElement("button");
     deleteBtn.innerText = "Delete";
     deleteBtn.classList.add("btn","deleteBtn");
     li.appendChild(deleteBtn);
 
-    //creating edit btn
-    const editBtn = document.createElement("button");
-    editBtn.innerText = "Edit";
-    editBtn.classList.add("btn","editBtn");
-    li.appendChild(editBtn);
 
     todoList.appendChild(li);
     inputBox.value = "";
