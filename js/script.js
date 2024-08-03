@@ -2,6 +2,8 @@ const inputBox = document.getElementById('inputBox');
 const addBtn = document.getElementById('addBtn');
 const todoList = document.getElementById('todoList');
 
+let editTodo = null;
+
 //function to add to do
 const addTodo = ()=>{
     const inputText = inputBox.value.trim();
@@ -9,6 +11,14 @@ const addTodo = ()=>{
         alert("You must write something in your to do");
         return false;
     }
+
+    if(addBtn.value === "Edit"){
+        editTodo.target.previousElementSibling.innerHTML = inputText;
+        editLocalTodos(inputText);
+        addBtn.value = "Add";
+        inputBox.value = "";
+    }
+    else{
     //creating p tag
     const li = document.createElement("li");
     const p = document.createElement("p");
@@ -20,7 +30,7 @@ const addTodo = ()=>{
     editBtn.innerText = "Edit";
     editBtn.classList.add("btn","editBtn");
     li.appendChild(editBtn);
-    
+
     //creating delete btn
     const deleteBtn = document.createElement("button");
     deleteBtn.innerText = "Delete";
@@ -30,6 +40,7 @@ const addTodo = ()=>{
 
     todoList.appendChild(li);
     inputBox.value = "";
+    }
 
 
     saveLocalTodos(inputText);
@@ -41,6 +52,12 @@ const updateTodo = (e)=>{
         //console.log(e.target.parentElement);
         todoList.removeChild(e.target.parentElement);
         deleteLocalTodos(e.target.parentElement);
+    }
+    if(e.target.innerHTML === "Edit"){
+        inputBox.value = e.target.previousElementSibling.innerHTML;
+        inputBox.focus();
+        addBtn.value = "Edit";
+        editTodo = e;
     }
 }
 
@@ -73,6 +90,13 @@ const getLocalTodos = () =>{
             p.innerHTML = todo;
             li.appendChild(p);
 
+            //creating edit btn
+            const editBtn = document.createElement("button");
+            editBtn.innerText = "Edit";
+            editBtn.classList.add("btn","editBtn");
+            li.appendChild(editBtn);
+
+
             //creating delete btn
             const deleteBtn = document.createElement("button");
             deleteBtn.innerText = "Delete";
@@ -80,12 +104,12 @@ const getLocalTodos = () =>{
             li.appendChild(deleteBtn);
 
     todoList.appendChild(li);
-    inputBox.value = "";
+    
         });
     }
 }
 
-const deleteLocalTodos = ()=>{
+const deleteLocalTodos = (todo)=>{
     let todos = [];
     if(localStorage.getItem("todos") === null){
         todos = [];
@@ -101,6 +125,13 @@ const deleteLocalTodos = ()=>{
     localStorage.setItem("todos",JSON.stringify(todos));
     //Array functions : slice / splice
     console.log(todoIndex);
+}
+
+const editLocalTodos = (todo)=>{
+    let todos = JSON.parse(localStorage.getItem("todos"));
+    let todoIndex = todos.indexOf(todo);
+    todos[todoIndex] = inputBox.value;
+    localStorage.setItem("todos",JSON.stringify(todos));
 }
 document.addEventListener('DOMContentLoaded',getLocalTodos);
 addBtn.addEventListener('click',addTodo);
